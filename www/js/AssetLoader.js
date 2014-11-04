@@ -84,6 +84,12 @@ function loadMenu()
 	ctx.closePath();
 	ctx.stroke();
 	
+	ctx.font = "15px Helvetica";
+	ctx.fillText('Note: In your browser, click and drag to move.',canvas.width - 450,canvas.height/2 + 150);
+	ctx.fillText('Certain ways of using the mouse can make the game crash.',canvas.width - 450,canvas.height/2 + 175);
+	ctx.fillText('For the best experience, hold the button down and drag the mouse.',canvas.width - 450,canvas.height/2 + 200);
+	ctx.fillText("Do exactly that if you know what's good for you.",canvas.width - 450,canvas.height/2 + 225);
+	
 	ctx.font = "30px Helvetica";
 	ctx.fillText('Tap the screen to play.',canvas.width - 400,canvas.height/2 + 100);
 }
