@@ -458,7 +458,7 @@ function loadMine()
 		mine.id = "mine";
 		
 		//Keep experimenting with different scales
-		mine.scale = 50 * (0.3 + Math.random());
+		mine.scale = 20 * (1 + Math.random());
 		
 		mine.position.x = canvas.width-mine.scale;
 		
@@ -520,7 +520,7 @@ function loadMine()
 				//periodically apply impulses in the direction of the ball to the mine to keep it moving
 				//the mod value for counter here is a direct metric of difficulty
 				//higher values make the game easier
-				if(counter % 300 == 0)
+				if(counter % 200 == 0)
 					this.physicsBody.ApplyImpulse(new Box2D.Common.Math.b2Vec2((ball.position.x - this.position.x) * 1000 * this.scale,(ball.position.y - this.position.y) * 1000 * this.scale),this.physicsBody.GetWorldCenter());
 				
 				this.direction = this.physicsBody.GetLinearVelocity();
@@ -560,7 +560,7 @@ function loadCleaver()
 		//identify this entity as a cleaver
 		cleaver.id = "cleaver";
 		
-		cleaver.scale = 50 * (1 + Math.random());
+		cleaver.scale = 25;
 		
 		cleaver.position.x = cleaver.scale;
 		

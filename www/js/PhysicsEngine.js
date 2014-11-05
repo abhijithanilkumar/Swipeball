@@ -34,8 +34,8 @@ function PhysicsEngine() {
 		
 		this.world.Step(
 			100,
-			10,
-			10
+			100,
+			100
 		);
 		
 		this.world.ClearForces();

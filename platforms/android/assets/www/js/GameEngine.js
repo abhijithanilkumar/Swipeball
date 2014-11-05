@@ -1,46 +1,46 @@
+//the array that stores all active entities that the game engine should update every cycle,
+//sorted in their rendering order
 var entitiesByZindex;
+
+//the speed of rotation of the cleaver/used for movements in some places, but to no avail
 var speed;
+
+//if you don't know what this is for, you need to question your existence
 var score;
+
+//counts the number of loop cycles, and eventually wraps around
 var counter;
 
+//flags indicating that you've died, or you're looking at the menu right now
 var gameOver;
+var menu;
 
+//set this flag to true anywhere, and the game engine will halt
+//convenient for development purposes, as you can halt the game and check values at any point
 var debug = false;
 
-function drawGrid()
-{
-	ctx.strokeStyle = '#CCC';
-	for(var i=0; i < canvas.width; i += 10)
-	{
-		ctx.beginPath();
-		ctx.moveTo(i,0);
-		ctx.lineTo(i,canvas.height);
-		ctx.closePath();
-		ctx.stroke();
-	}
-	for(var j=0; j < canvas.height; j += 10)
-	{
-		ctx.beginPath();
-		ctx.moveTo(0,j);
-		ctx.lineTo(canvas.width,j);
-		ctx.closePath();
-		ctx.stroke();
-	}
-	ctx.strokeStyle = '#000';
-}
-
-//One cycle of computat0ion
+//one cycle of computation
 function gameEngineLoop()
 {
 	if(counter % 50 == 49)
 		score += 1;
 	counter += 1;
+	//wrap around
+	//I'm scared of huge numbers for some reason
 	if(counter > 10000)
 		counter = 1;
+	
+	//clear the screen
 	ctx.clearRect(0,0,canvas.width,canvas.height);
+	//draw the grid
+	//I hate plain white backgrounds
 	drawGrid();
+	//perform physics computations
+	//--> check if collisions have occurred, and update positions and velocities of physics bodies
 	gPhysicsEngine.update();
+	//if the number of mines on the field is less than mineCount, more mine(s) will be added
 	populateMines();
+	//go through the entities in their rendering order, and fire their update functions
 	for(var i=0; i < entitiesByZindex.length; i++)
 	{
 		for(var j=0; j < entitiesByZindex[i].length; j++)
@@ -53,10 +53,12 @@ function gameEngineLoop()
 				entitiesByZindex[i][j].killed = true;
 			if(entitiesByZindex[i][j].killed)
 			{
+				//if the entity is marked for death, destroy it
 				if(entitiesByZindex[i][j].id = "mine" && !gameOver)
 				{
 					//do the score computation and difficulty setting here instead of in the collision handler
 					//since a single collision fires the handler multiple times in Box2D
+					//Box2D is stupid.
 					
 					//increase the score by a good amount
 					score += 30;
@@ -71,9 +73,10 @@ function gameEngineLoop()
 		}
 	}
 	
+	//print the score
 	ctx.fillText(score.toString(),canvas.width-150,40);
 	
-	if(debug || gameOver)
+	if(gameOver)
 	{
 		ctx.font = "50px Helvetica";
 		ctx.fillText("Score : " + score.toString(),canvas.width/2 - 150, canvas.height/2 - 25);
@@ -81,6 +84,13 @@ function gameEngineLoop()
 		ctx.font = "30px Helvetica";
 		ctx.fillText("Tap to retry.",canvas.width/2 - 120, canvas.height/2 + 50);
 	}
+	else if(debug)
+	{
+		//do nothing; end the game loop
+	}
 	else
+	{
+		//fire the next game loop iteration while succumbing to HTML5 Canvas's whims
 		window.requestAnimationFrame(gameEngineLoop);
+	}
 }

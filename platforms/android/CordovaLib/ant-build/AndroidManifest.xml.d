@@ -1,2 +1,2 @@
-I:\workspace\swipeball\platforms\android\CordovaLib\ant-build\AndroidManifest.xml : \
-I:\workspace\swipeball\platforms\android\CordovaLib\AndroidManifest.xml \
+F:\workspace\swipeball\platforms\android\CordovaLib\ant-build\AndroidManifest.xml : \
+F:\workspace\swipeball\platforms\android\CordovaLib\AndroidManifest.xml \

@@ -1,5 +1,5 @@
-I:\workspace\swipeball\platforms\android\ant-build\Main-debug-unaligned.apk : \
-I:\workspace\swipeball\platforms\android\ant-build\Main.ap_ \
-I:\workspace\swipeball\platforms\android\ant-build\classes.dex \
-I:\workspace\swipeball\platforms\android\CordovaLib\ant-build\classes.jar \
-I:\workspace\swipeball\platforms\android\libs\armeabi\libFastCanvasJNI.so \
+F:\workspace\swipeball\platforms\android\ant-build\Main-debug-unaligned.apk : \
+F:\workspace\swipeball\platforms\android\ant-build\Main.ap_ \
+F:\workspace\swipeball\platforms\android\ant-build\classes.dex \
+F:\workspace\swipeball\platforms\android\CordovaLib\ant-build\classes.jar \
+F:\workspace\swipeball\platforms\android\libs\armeabi\libFastCanvasJNI.so \

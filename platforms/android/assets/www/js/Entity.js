@@ -1,4 +1,5 @@
-//the base entity class
+//the general entity skeleton used by the walls, the ball, the mines and the cleaver
+//additional properties/functions needed by specific entities may be defined under those entities
 function Entity() {
 	
 	//position of the entity in 2d space
@@ -31,23 +32,27 @@ function Entity() {
 	this.killed = null;
 	
 	//the primary sprite used by the entity
+	//not used as of now
 	this.spriteName = null;
 	
 	//the sprite being used in this frame (could be any animation frame)
+	//not used as of now
 	this.currSpriteSheetName = null;
 	
 	//the BodyDef object needed by Box2D to apply physics to the entity
 	this.physicsBody = null;
 	
 	//the animation/action state of the entity
+	//not used as of now
 	this.state = null;
 	
 	//contains string-spritesheet mappings for animations
+	//not used as of now
 	this.animations = {
 	
 	};
 	
-	//static or dynamic
+	//is the entity static or dynamic?
 	this.type = null;
 	
 	//called every cycle of the game engine, if the entity is active
@@ -76,6 +81,8 @@ function Entity() {
 		
 	};
 	
+	//checks if a sprite bearing a certain name exists in a given spritesheet
+	//not used as of now
 	this.findSprite = function(name) {
 		
 		var sheet = null;
@@ -99,6 +106,7 @@ function Entity() {
 	};
 	
 	//sets the status of the player to change current sprite
+	//not used as of now
 	this.setState = function(name) {
 		this.state = name;
 		
@@ -132,6 +140,7 @@ function Entity() {
 	};
 	
 	//for a given animation, returns the index of the next frame
+	//not used as of now
 	this.updateNextFrame = function() {
 		var name = this.state.state;
 		
@@ -174,15 +183,6 @@ function Entity() {
 
 }
 
-function cloneEntity(obj) {
-    if (null == obj || "object" != typeof obj) return obj;
-    var copy = obj.constructor();
-    for (var attr in obj) {
-        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-    }
-    return copy;
-}
-
 var ground = null;
 
 var leftWall = null;
@@ -193,12 +193,13 @@ var ceiling = null;
 
 var ball = null;
 
+//the explosion hasn't been made yet
 var explosion = null;
 
 //stores all mine entities
 var mines = [];
 
-//an indicator of difficulty
+//a metric of difficulty
 var mineCount = 0;
 
 function loadGround() 
@@ -442,6 +443,7 @@ function loadBall()
 		}
 	};
 	
+	//set the ball's physicsBody for the first time
 	ball.physicsBody= gPhysicsEngine.addBody(entityDef);
 	
 }
@@ -456,7 +458,7 @@ function loadMine()
 		mine.id = "mine";
 		
 		//Keep experimenting with different scales
-		mine.scale = 50 * (0.3 + Math.random());
+		mine.scale = 20 * (1 + Math.random());
 		
 		mine.position.x = canvas.width-mine.scale;
 		
@@ -518,7 +520,7 @@ function loadMine()
 				//periodically apply impulses in the direction of the ball to the mine to keep it moving
 				//the mod value for counter here is a direct metric of difficulty
 				//higher values make the game easier
-				if(counter % 300 == 0)
+				if(counter % 200 == 0)
 					this.physicsBody.ApplyImpulse(new Box2D.Common.Math.b2Vec2((ball.position.x - this.position.x) * 1000 * this.scale,(ball.position.y - this.position.y) * 1000 * this.scale),this.physicsBody.GetWorldCenter());
 				
 				this.direction = this.physicsBody.GetLinearVelocity();
@@ -543,7 +545,7 @@ function loadMine()
 		//set this entity's physics body for the first time
 		mine.setPhysicsBody();
 		
-		//give it some random velocity
+		//give it some random velocity for no particular reason
 		mine.physicsBody.ApplyImpulse(new Box2D.Common.Math.b2Vec2(Math.random() * 1000000000000 * mine.scale * 10,Math.random() * 1000000000000 * mine.scale * 10),mine.physicsBody.GetWorldCenter());
 		
 		return mine;
@@ -558,7 +560,7 @@ function loadCleaver()
 		//identify this entity as a cleaver
 		cleaver.id = "cleaver";
 		
-		cleaver.scale = 50 * (1 + Math.random());
+		cleaver.scale = 25;
 		
 		cleaver.position.x = cleaver.scale;
 		
@@ -653,6 +655,7 @@ function loadCleaver()
 		//set this entity's physics body for the first time
 		cleaver.setPhysicsBody();
 		
+		//set the cleaver in motion after it's created
 		cleaver.physicsBody.ApplyImpulse(new Box2D.Common.Math.b2Vec2(1 * 1000000000000 * cleaver.scale * 10,1 * 1000000000000 * cleaver.scale * 10),cleaver.physicsBody.GetWorldCenter());
 		
 		return cleaver;
@@ -660,7 +663,7 @@ function loadCleaver()
 
 function populateMines()
 {
-	//TODO: spawn random mines
+	//spawn random mines
 	if(mines.length < mineCount)
 	{
 		mines.push(loadMine());

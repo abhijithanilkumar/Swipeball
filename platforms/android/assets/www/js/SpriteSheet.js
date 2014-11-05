@@ -1,4 +1,7 @@
 //define the SpriteSheet class
+
+//this file isn't used by swipeball (yet)
+
 function SpriteSheet(path,jsonData) {
 	
 	//path to sprite/spritesheet data (image, and maybe json)
